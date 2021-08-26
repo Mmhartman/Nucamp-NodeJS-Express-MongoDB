@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "node-http",
   "version": "1.0.0",
   "description": "Node HTTP Module Example",
@@ -10,4 +11,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC"
+=======
+  "name": "node-express",
+  "version": "1.0.0",
+  "description": "Node Express Examples",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+>>>>>>> 35ef007 (Intro to Express Part 1)
 }
