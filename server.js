@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const campsiteRouter = require('./routes/campsiteRouter');
+const promotionRouter = require('./routes/promotionRouter');
+const partnerRouter = require('./routes/partnerRouter');
 
 const hostname = 'localhost';
 const port = 3000;
@@ -9,8 +11,10 @@ const app = express();
 app.use(morgan('dev')); // MORGAN MIDDLEWARE
 app.use(express.json()); // SET UP a REST API
 
-app.use('/campsites', campsiteRouter); // root path for the campsite router
-
+// root path for the campsite router
+app.use('/campsites', campsiteRouter); 
+app.use('/promotions', promotionRouter);
+app.use('/partners', partnerRouter);
 
 
 app.use(express.static(__dirname + '/public'));
