@@ -1,5 +1,7 @@
 const MongoClient = require('mongodb').MongoClient; // act as a client for the mongol server
 const assert = require('assert').strict;
+const dboper = require('./operations'); // dboper - database operations
+
 
 const url = 'mongodb://localhost:27017/'; // where mongodb can be accessed
 const dbname = 'nucampsite'; // new campsite database
@@ -15,31 +17,43 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => { //clie
     const db = client.db(dbname);
 
     //dropping a collection - delete or remove. serious operation
-    db.dropCollection('campsites', (err, result) => { 
+    db.dropCollection('campsites', (err, result) => {
         assert.strictEqual(err, null);// assert that error is not null 
 
         //if that's TRUE continue on and console.log that we drop the collection and print the result
-        console.log('Dropped Collection', result);
+        console.log('Dropped Collection:', result);
 
-        //recreate the campsites collection and get access thru it
-        const collection = db.collection('campsites');
+        
 
-        //INSERT the document into this collection
-        collection.insertOne({name: "Breadcrumb Trail Campground", description: "Test"},
+        //INSERT the document into this collection.
+        // Remember: calling a function - you are actually writing the code inside it // 
+        //defining that function- this is function will do when it's called.
+        dboper.insertDocument(db, { name: "Breadcrumb Trail Campground", description: "Test"},
+        'campsites', result => {
+        console.log('Insert Document:', result.ops);
 
-        //callback pattern with the error handling convention
-        (err,result) => { 
-            assert.strictEqual(err,null); // check if any error has occurred
-            console.log('Insert Document:', result.ops); 
+        dboper.findDocuments(db, 'campsites', docs => {
+            console.log('Found Documents:', docs);
 
-            //print to the console all the docs that are now in this collection
-            collection.find().toArray((err, docs) => { 
-                assert.strictEqual(err, null); // to check for an error
-                console.log('Found Documents:', docs);
+            dboper.updateDocument(db, { name: "Breadcrumb Trail Campground" },
+                { description: "Updated Test Description" }, 'campsites',
+                result => {
+                    console.log('Updated Document Count:', result.result.nModified);
 
-                client.close(); 
-                // will immediately close the client's connection to the mongodb server
-            });
+                    dboper.findDocuments(db, 'campsites', docs => {
+                        console.log('Found Documents:', docs);
+                        
+                        dboper.removeDocument(db, { name: "Breadcrumb Trail Campground" },
+                            'campsites', result => {
+                                console.log('Deleted Document Count:', result.deletedCount);
+
+                                client.close();
+                            }
+                        );
+                    });
+                }
+            );
         });
     });
+ });
 });
