@@ -3,6 +3,25 @@
 const mongoose = require('mongoose'); // import mongoose
 const Schema = mongoose.Schema; 
 
+const commentSchema = new Schema({
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
+    },
+    text: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: String,
+        required: true
+    }
+}, {
+    timestamps:  true
+});
+
 
 // Schema
 const campsiteSchema = new Schema({
@@ -14,7 +33,8 @@ const campsiteSchema = new Schema({
     description: {
         type: String,
         required: true
-    }
+    },
+    comments: [commentSchema] //sub documents
 }, {
     timestamps: true
 });
