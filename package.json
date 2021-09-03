@@ -1,7 +1,7 @@
 {
-  "name": "node-mongo",
+  "name": "node-mongoose",
   "version": "1.0.0",
-  "description": "Node MongoDB Example",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^3.6.2"
-  }
+    "mongoose": "^5.10.9"
+  },
+  "devDependencies": {},
+  "description": ""
 }
