@@ -6,8 +6,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-<<<<<<< HEAD
-=======
 const campsiteRouter = require('./routes/campsiteRouter');
 const promotionRouter = require('./routes/promotionRouter');
 const partnerRouter = require('./routes/partnerRouter');
@@ -27,7 +25,6 @@ connect.then(() => console.log('Connected correctly to server'),
 );
 
 
->>>>>>> 3d267ee (Express REST API with MongoDB and Mongoose Part 1)
 
 var app = express();
 
@@ -43,12 +40,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-<<<<<<< HEAD
-=======
 app.use('/campsites', campsiteRouter); 
 app.use('/promotions', promotionRouter);
 app.use('/partners', partnerRouter);
->>>>>>> 3d267ee (Express REST API with MongoDB and Mongoose Part 1)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

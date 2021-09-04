@@ -4,22 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
-=======
     "start": "nodemon ./bin/www"
->>>>>>> 3d267ee (Express REST API with MongoDB and Mongoose Part 1)
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "mongoose": "^5.10.9"
-  },
-  "devDependencies": {},
-  "description": ""
-=======
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -29,5 +18,4 @@
     "mongoose-currency": "^0.2.0",
     "morgan": "~1.9.1"
   }
->>>>>>> 3d267ee (Express REST API with MongoDB and Mongoose Part 1)
 }
