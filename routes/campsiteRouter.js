@@ -8,13 +8,13 @@ const campsiteRouter = express.Router();
 
 campsiteRouter.route('/')
 .get((req, res, next) => {
-    Campsite.find()
-    .then(campsites => {
+    Campsite.find() // promise base request
+    .then(campsites => { //  content is the what not //
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(campsites);
     })
-    .catch(err => next(err));
+    .catch(err => next(err)); // what if we have an error
 })
 .post((req, res, next) => {
     Campsite.create(req.body)
@@ -26,6 +26,7 @@ campsiteRouter.route('/')
     })
     .catch(err => next(err));
 })
+
 .put((req, res) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /campsites');
@@ -50,6 +51,7 @@ campsiteRouter.route('/:campsiteId')
     })
     .catch(err => next(err));
 })
+
 .post((req, res) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`);
