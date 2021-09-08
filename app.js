@@ -35,31 +35,41 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('12345-67890-09876-54321')); // string just a cryptographic key
 
 //Set up an Express server to handle basic authentication//
 function auth(req, res, next) {
-  console.log(req.headers);
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-      const err = new Error('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      return next(err);
+      if (!req.signedCookies.user) { // provided by cookie parser 
+          const authHeader = req.headers.authorization;
+          if (!authHeader) {
+              const err = new Error('You are not authenticated!');
+              res.setHeader('WWW-Authenticate', 'Basic');
+              err.status = 401;
+              return next(err);
+          }
+          //username and password 
+          const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
+          const user = auth[0];
+          const pass = auth[1];
+          if (user === 'admin' && pass === 'password') {
+              res.cookie('user', 'admin', {signed: true}); //set up a cookie. part of express response API
+              return next(); // authorized
+          } else {
+              const err = new Error('You are not authenticated!');
+              res.setHeader('WWW-Authenticate', 'Basic');      
+              err.status = 401;
+              return next(err);
+          }
+      } else { // if there's a signed cookie .user value in the incoming request
+        if(req.signedCookies.user === 'admin') {
+          return next();
+        } else {
+            const err = new Error('You are not authenticated!');    
+            err.status = 401;
+            return next(err); 
+        }
+      }
   }
-
-  const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
-  const user = auth[0];
-  const pass = auth[1];
-  if (user === 'admin' && pass === 'password') {
-      return next(); // authorized
-  } else {
-      const err = new Error('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');      
-      err.status = 401;
-      return next(err);
-  }
-}
 //
 
 app.use(auth);
