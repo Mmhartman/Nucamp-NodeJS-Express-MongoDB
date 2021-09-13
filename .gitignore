@@ -7,3 +7,5 @@ node_modules
 =======
 node_modules
 >>>>>>> dea996e (Mongoose Part 1)
+bin/server.cert
+bin/server.key
