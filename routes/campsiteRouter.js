@@ -175,7 +175,7 @@ campsiteRouter.route('/:campsiteId/comments/:commentId') // endpoint
     Campsite.findById(req.params.campsiteId)
     .then(campsite => {
 
-        if (req.body.author.equals(req.user._id)) {
+        if (campsite.comments.id(req.params.commentId).author._id.equals(req.user._id)) {
 
             if (campsite && campsite.comments.id(req.params.commentId)) {
                 if (req.body.rating) {
@@ -214,7 +214,8 @@ campsiteRouter.route('/:campsiteId/comments/:commentId') // endpoint
     Campsite.findById(req.params.campsiteId)
     .then(campsite => {
 
-    if (req.body.author.equals(req.user._id)) {
+    if (campsite.comments.id(req.params.commentId).author._id.equals(req.user._id)) { // corrected by instructor Assignment 3 same line 178
+        
             if (campsite && campsite.comments.id(req.params.commentId)) {
 
                 campsite.comments.id(req.params.commentId).remove();
